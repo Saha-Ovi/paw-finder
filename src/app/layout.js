@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${nunitoFont.variable} h-full antialiased`}
+      className={`${nunitoFont.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Navbar/>
