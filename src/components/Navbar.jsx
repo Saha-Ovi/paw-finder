@@ -14,7 +14,6 @@ const Navbar = () => {
             <nav className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3'>
                 <div className='flex justify-between items-center'>
                     
-                    {/* Brand Logo & Name */}
                     <div className='flex items-center gap-2'>
                         <div className="relative w-12 h-12 md:w-14 md:h-14">
                             <Image 
