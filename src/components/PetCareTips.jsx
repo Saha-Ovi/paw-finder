@@ -4,7 +4,6 @@ import React from 'react';
 const PetCareTips = () => {
     return (
         <div className='container mx-auto px-4 my-12 md:my-16'>
-            {/* Header Block */}
             <div className='max-w-3xl mx-auto text-center space-y-3 mb-10'>
                 <h5 className='text-base sm:text-lg font-bold tracking-wider text-[#0D9488] uppercase'>
                     — Pet Care Guide —
@@ -17,10 +16,8 @@ const PetCareTips = () => {
                 </p>
             </div>
 
-            {/* Responsive Grid Setup */}
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch'>
                 
-                {/* Tip 1: Nutrition */}
                 <Card className='group rounded-2xl p-5 bg-white dark:bg-neutral-900 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out border border-neutral-100 dark:border-neutral-800 flex flex-col justify-between cursor-pointer'>
                     <div className='flex gap-4 items-start flex-1'>
                         <div className='bg-[#E8621A]/10 group-hover:bg-[#E8621A]/20 w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors duration-300'>
@@ -40,7 +37,6 @@ const PetCareTips = () => {
                     </div>
                 </Card>
 
-                {/* Tip 2: Exercise */}
                 <Card className='group rounded-2xl p-5 bg-white dark:bg-neutral-900 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out border border-neutral-100 dark:border-neutral-800 flex flex-col justify-between cursor-pointer'>
                     <div className='flex gap-4 items-start flex-1'>
                         <div className='bg-[#0D9488]/10 group-hover:bg-[#0D9488]/20 w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors duration-300'>
@@ -59,8 +55,6 @@ const PetCareTips = () => {
                         </div>
                     </div>
                 </Card>
-
-                {/* Tip 3: Vet Visits */}
                 <Card className='group rounded-2xl p-5 bg-white dark:bg-neutral-900 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out border border-neutral-100 dark:border-neutral-800 flex flex-col justify-between cursor-pointer'>
                     <div className='flex gap-4 items-start flex-1'>
                         <div className='bg-purple-50 dark:bg-purple-950/30 group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors duration-300'>
@@ -79,8 +73,6 @@ const PetCareTips = () => {
                         </div>
                     </div>
                 </Card>
-
-                {/* Tip 4: Safe Environment */}
                 <Card className='group rounded-2xl p-5 bg-white dark:bg-neutral-900 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out border border-neutral-100 dark:border-neutral-800 flex flex-col justify-between cursor-pointer'>
                     <div className='flex gap-4 items-start flex-1'>
                         <div className='bg-blue-50 dark:bg-blue-950/30 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-colors duration-300'>
