@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Chip } from "@heroui/react";
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { MdOutlineVerifiedUser } from 'react-icons/md';
 import { CiHeart } from 'react-icons/ci';
@@ -26,12 +26,18 @@ const Banner = () => {
                         </p>
                     </div>
 
-                    <div>
+                    <div className='flex gap-1'>
                         <Button
                             variant='outline'
                             className='text-white border-white/40 hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-xl transition-all w-full sm:w-auto'
                         >
                             Adopt Now <FaArrowRight />
+                        </Button>
+                        <Button
+                            variant='outline'
+                            className='text-white border-white/40 hover:bg-white hover:text-black font-semibold px-6 py-3 rounded-xl transition-all w-full sm:w-auto'
+                        >
+                            List Pet <FaPlusCircle />
                         </Button>
                     </div>
                     <div className='flex flex-wrap justify-center lg:justify-start items-center gap-y-3 gap-x-5 pt-2 text-sm sm:text-base border-t border-white/10 w-full'>
