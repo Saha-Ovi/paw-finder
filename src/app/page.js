@@ -1,3 +1,4 @@
+import Adoption from "@/components/Adoption";
 import AdoptPet from "@/components/AdoptPet";
 import Banner from "@/components/Banner";
 import Bread from "@/components/Bread";
@@ -13,6 +14,7 @@ export default function Home() {
     <SuccessStory/>
     <PetCareTips/>
     <Bread/>
+    <Adoption/>
     </div>
   );
 }
