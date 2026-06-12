@@ -35,7 +35,7 @@ const RegisterPage = () => {
                 </div>
                 <div className='mb-5 w-full'>
                     <Button
-                        variant='bordered'
+                        variant='outline'
                         className='w-full py-5 text-sm sm:text-base font-semibold rounded-xl flex items-center justify-center gap-2 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors duration-200'
                     >
                         <FcGoogle className="text-xl shrink-0" />
