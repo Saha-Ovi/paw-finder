@@ -1,38 +1,47 @@
 "use client";
 
-import { Button, Separator, Description, FieldError, Form, Input, Label, TextField } from '@heroui/react';
-import React from 'react';
+import { Button,Description, FieldError, Form, Input, Label, TextField } from '@heroui/react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { LuEye, LuEyeOff } from 'react-icons/lu';
 
 const LoginPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
         // console.log(user);
+        const loading = toast.loading("Connecting to email");
         const { data, error } = await authClient.signIn.email({
             email: user.email,
             password: user.password,
         });
-
+        toast.dismiss(loading);
         if (data) {
+            toast.success("User successfully Logged in")
             redirect('/');
+
         }
         if (error) {
-            alert(error);
+            toast.error(error.message || "Login Failed");
         }
 
     };
 
     const handleGoogleLogin = async () => {
+        const loading = toast.loading("Connecting to google");
         await authClient.signIn.social({
             provider: "google",
         });
+        toast.dismiss(loading);
+        toast.success("User successfully Logged in");
     }
 
     return (
@@ -92,7 +101,7 @@ const LoginPage = () => {
                         isRequired
                         minLength={8}
                         name="password"
-                        type="password"
+                        type={showPassword? "text" :"password"}
                         className="w-full flex flex-col gap-1.5"
                         validate={(value) => {
                             if (value.length < 8) {
@@ -110,10 +119,24 @@ const LoginPage = () => {
                         <Label className='text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300'>
                             Password
                         </Label>
-                        <Input
-                            placeholder="••••••••"
-                            className="w-full"
-                        />
+                        <div className="relative w-full flex items-center">
+                            <Input
+                                placeholder="••••••••"
+                                className="w-full pr-12"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 focus:outline-none flex items-center justify-center p-1 z-10"
+                                aria-label="toggle password visibility"
+                            >
+                                {showPassword ? (
+                                    <LuEyeOff className="text-xl shrink-0" />
+                                ) : (
+                                    <LuEye className="text-xl shrink-0" />
+                                )}
+                            </button>
+                        </div>
                         <Description className="text-[11px] leading-normal text-neutral-400 dark:text-neutral-500 mt-0.5">
                             Must be at least 8 characters with 1 uppercase and 1 number.
                         </Description>

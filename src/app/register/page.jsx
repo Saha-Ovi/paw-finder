@@ -8,16 +8,19 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
+import { LuEye, LuEyeOff } from 'react-icons/lu';
 
 const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
-        console.log(user);
+        // console.log(user);
+        const loading = toast.loading("Connecting to email");
         const { data, error } = await authClient.signUp.email({
             name: user.name,
             email: user.email,
@@ -25,20 +28,24 @@ const RegisterPage = () => {
             image: user.image,
         });
 
-        if(data)
-        {
+        toast.dismiss(loading);
+        if (data) {
+            toast.success("User successfully Logged in")
             redirect('/');
+
         }
-        if(error)
-        {
-            alert(error);
+        if (error) {
+            toast.error(error.message || "Registration Failed");
         }
     };
-      const handleGoogleLogin = async () => {
-            await authClient.signIn.social({
-                provider: "google",
-            });
-        }
+    const handleGoogleLogin = async () => {
+        const loading = toast.loading("Connecting to google");
+        await authClient.signIn.social({
+            provider: "google",
+        });
+        toast.dismiss(loading);
+        toast.success("User successfully Logged in");
+    }
 
     return (
         <div className='container mx-auto px-4 my-12 md:my-16 flex items-center justify-center min-h-[80vh]'>
@@ -140,7 +147,7 @@ const RegisterPage = () => {
                         isRequired
                         minLength={8}
                         name="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         className="w-full flex flex-col gap-1.5"
                         value={password}
                         onChange={(value) => setPassword(value)}
@@ -163,10 +170,24 @@ const RegisterPage = () => {
                         <Label className='text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300'>
                             Password
                         </Label>
-                        <Input
-                            placeholder="••••••••"
-                            className="w-full"
-                        />
+                        <div className="relative w-full flex items-center">
+                            <Input
+                                placeholder="••••••••"
+                                className="w-full pr-12"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 focus:outline-none flex items-center justify-center p-1 z-10"
+                                aria-label="toggle password visibility"
+                            >
+                                {showPassword ? (
+                                    <LuEyeOff className="text-xl shrink-0" />
+                                ) : (
+                                    <LuEye className="text-xl shrink-0" />
+                                )}
+                            </button>
+                        </div>
                         <Description className="text-[11px] leading-normal text-neutral-400 dark:text-neutral-500 mt-0.5">
                             Must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number.
                         </Description>
@@ -175,7 +196,7 @@ const RegisterPage = () => {
                     <TextField
                         isRequired
                         name="confirmPassword"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         className="w-full flex flex-col gap-1.5"
                         value={confirmPassword}
                         onChange={(value) => setConfirmPassword(value)}
@@ -192,10 +213,24 @@ const RegisterPage = () => {
                         <Label className='text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300'>
                             Confirm Password
                         </Label>
-                        <Input
-                            placeholder="••••••••"
-                            className="w-full"
-                        />
+                        <div className="relative w-full flex items-center">
+                            <Input
+                                placeholder="••••••••"
+                                className="w-full pr-12"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 focus:outline-none flex items-center justify-center p-1 z-10"
+                                aria-label="toggle password visibility"
+                            >
+                                {showPassword ? (
+                                    <LuEyeOff className="text-xl shrink-0" />
+                                ) : (
+                                    <LuEye className="text-xl shrink-0" />
+                                )}
+                            </button>
+                        </div>
                         <FieldError className="text-xs font-semibold text-danger-500 mt-1" />
                     </TextField>
                     <div className="w-full pt-2">
