@@ -6,15 +6,35 @@ import Link from 'next/link';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
+import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
 
 const LoginPage = () => {
-    const handleLogin = (e)=>{
+    const handleLogin = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
-        console.log(user);
+        // console.log(user);
+        const { data, error } = await authClient.signIn.email({
+            email: user.email,
+            password: user.password,
+        });
 
+        if (data) {
+            redirect('/');
+        }
+        if (error) {
+            alert(error);
+        }
+
+    };
+
+    const handleGoogleLogin = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+        });
     }
+
     return (
         <div className='container mx-auto px-4 my-12 md:my-16 flex items-center justify-center min-h-[80vh]'>
             <div className='w-full max-w-2xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-300'>
@@ -23,7 +43,7 @@ const LoginPage = () => {
                         Log in to your account
                     </h2>
                     <p className='text-sm sm:text-base text-neutral-500 dark:text-neutral-400 font-medium inline-flex items-center gap-1.5 flex-wrap justify-center'>
-                        Don't have an account? 
+                        Don't have an account?
                         <Link href="/register" className='text-[#E8621A] hover:underline inline-flex items-center gap-1 font-semibold group'>
                             Create one free
                             <FaLongArrowAltRight className='transition-transform duration-200 group-hover:translate-x-1' />
@@ -31,8 +51,8 @@ const LoginPage = () => {
                     </p>
                 </div>
                 <div className='mb-5 w-full'>
-                    <Button 
-                        variant='outline' 
+                    <Button onClick={handleGoogleLogin}
+                        variant='outline'
                         className='w-full py-5 text-sm sm:text-base font-semibold rounded-xl flex items-center justify-center gap-2 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors duration-200'
                     >
                         <FcGoogle className="text-xl shrink-0" />
@@ -62,8 +82,8 @@ const LoginPage = () => {
                         <Label className='text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300'>
                             Email Address
                         </Label>
-                        <Input 
-                            placeholder="name@example.com" 
+                        <Input
+                            placeholder="name@example.com"
                             className="w-full"
                         />
                         <FieldError className="text-xs font-semibold text-danger-500 mt-1" />
@@ -90,8 +110,8 @@ const LoginPage = () => {
                         <Label className='text-xs sm:text-sm font-bold text-neutral-700 dark:text-neutral-300'>
                             Password
                         </Label>
-                        <Input 
-                            placeholder="••••••••" 
+                        <Input
+                            placeholder="••••••••"
                             className="w-full"
                         />
                         <Description className="text-[11px] leading-normal text-neutral-400 dark:text-neutral-500 mt-0.5">
@@ -100,8 +120,8 @@ const LoginPage = () => {
                         <FieldError className="text-xs font-semibold text-danger-500 mt-1" />
                     </TextField>
                     <div className="w-full pt-2">
-                        <Button 
-                            type="submit" 
+                        <Button
+                            type="submit"
                             className='w-full py-5 bg-[#E8621A] hover:bg-[#d05313] text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2'
                         >
                             <FaArrowRightToBracket className="text-sm sm:text-base" />

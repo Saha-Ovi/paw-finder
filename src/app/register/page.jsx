@@ -6,17 +6,39 @@ import Link from 'next/link';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaArrowRightToBracket } from 'react-icons/fa6';
+import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
 
 const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
         console.log(user);
+        const { data, error } = await authClient.signUp.email({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            image: user.image,
+        });
+
+        if(data)
+        {
+            redirect('/');
+        }
+        if(error)
+        {
+            alert(error);
+        }
     };
+      const handleGoogleLogin = async () => {
+            await authClient.signIn.social({
+                provider: "google",
+            });
+        }
 
     return (
         <div className='container mx-auto px-4 my-12 md:my-16 flex items-center justify-center min-h-[80vh]'>
@@ -26,7 +48,7 @@ const RegisterPage = () => {
                         Register your account
                     </h2>
                     <p className='text-sm sm:text-base text-neutral-500 dark:text-neutral-400 font-medium inline-flex items-center gap-1.5 flex-wrap justify-center'>
-                        Already have an account? 
+                        Already have an account?
                         <Link href="/login" className='text-[#E8621A] hover:underline inline-flex items-center gap-1 font-semibold group'>
                             Log in here
                             <FaLongArrowAltRight className='transition-transform duration-200 group-hover:translate-x-1' />
@@ -34,7 +56,7 @@ const RegisterPage = () => {
                     </p>
                 </div>
                 <div className='mb-5 w-full'>
-                    <Button
+                    <Button onClick={handleGoogleLogin}
                         variant='outline'
                         className='w-full py-5 text-sm sm:text-base font-semibold rounded-xl flex items-center justify-center gap-2 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors duration-200'
                     >
@@ -94,7 +116,7 @@ const RegisterPage = () => {
                     </TextField>
                     <TextField
                         isRequired
-                        name="photo"
+                        name="image"
                         type="url"
                         className="w-full flex flex-col gap-1.5"
                         validate={(value) => {
