@@ -92,7 +92,9 @@ const Navbar = () => {
                                             <Dropdown.Item id="dashboard" textValue="Dashboard">
                                                 <div className='flex gap-2 items-center text-sm font-medium'>
                                                     <MdOutlineDashboardCustomize className="text-lg" />
-                                                    <span>Dashboard</span>
+                                                    <span>
+                                                        <Link href={'/dashboard'}>Dashboard</Link>
+                                                    </span>
                                                 </div>
                                             </Dropdown.Item>
 
@@ -129,6 +131,17 @@ const Navbar = () => {
                         }
                     </div>
                     <div className='md:hidden flex items-center'>
+                        {
+                            user?.image && (
+                                <Image
+                                    src={user.image}
+                                    alt={user.name || "Avatar"}
+                                    height={32}
+                                    width={32}
+                                    className='rounded-full object-cover'
+                                />
+                            )
+                        }
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className='text-slate-700 dark:text-neutral-300 hover:text-[#E8621A] p-2 focus:outline-none transition-colors'
@@ -156,6 +169,16 @@ const Navbar = () => {
                         <li className='my-2 border-t border-neutral-100 dark:border-neutral-800/60' aria-hidden="true" />
                         <li>
                             <Link
+                                href="/dashboard"
+                                onClick={() =>
+                                    setIsOpen(false)}
+                                className='text-base font-semibold text-neutral-600 dark:text-neutral-300 hover:text-[#E8621A] flex items-center transition-colors duration-200 w-full py-2.5 px-2 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
+                            >
+                                Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
                                 href="/login"
                                 onClick={() => setIsOpen(false)}
                                 className='text-base font-semibold text-neutral-600 dark:text-neutral-300 hover:text-[#E8621A] flex items-center transition-colors duration-200 w-full py-2.5 px-2 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
@@ -170,6 +193,19 @@ const Navbar = () => {
                                 className='text-base font-semibold text-neutral-600 dark:text-neutral-300 hover:text-[#E8621A] flex items-center transition-colors duration-200 w-full py-2.5 px-2 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
                             >
                                 Register
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                href="/"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    handleLogout()
+                                }}
+                                className='text-base font-semibold text-neutral-600 dark:text-neutral-300 hover:text-[#E8621A] flex items-center transition-colors duration-200 w-full py-2.5 px-2 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
+                            >
+                                Logout
                             </Link>
                         </li>
                     </ul>
